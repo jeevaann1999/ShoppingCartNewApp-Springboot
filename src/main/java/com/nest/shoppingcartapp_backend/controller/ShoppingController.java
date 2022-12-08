@@ -38,10 +38,12 @@ public class ShoppingController {
         return (List<Product>) dao.findAll();
     }
     @CrossOrigin(origins = "*")
-    @PostMapping("/search")
-    public String SearchProduct()
+    @PostMapping(path = "/search",consumes = "application/json",produces = "application/json")
+    public List<Product> SearchProduct(@RequestBody Product p)
     {
-        return "Welcome to the search product page";
+        String name=p.getName().toString();
+        System.out.println(name);
+        return (List<Product>) dao.SearchProduct(p.getName());
     }
     @CrossOrigin(origins = "*")
     @PostMapping("/register")
@@ -56,5 +58,7 @@ public class ShoppingController {
         d.save(u);
         return "welcome";
     }
+
+
 
 }
