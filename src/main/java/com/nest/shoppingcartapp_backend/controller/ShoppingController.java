@@ -5,10 +5,9 @@ import com.nest.shoppingcartapp_backend.dao.ProductDao;
 import com.nest.shoppingcartapp_backend.dao.RegisterDao;
 import com.nest.shoppingcartapp_backend.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ShoppingController {
@@ -17,7 +16,9 @@ public class ShoppingController {
 
     @Autowired
     private RegisterDao d;
-    @PostMapping("/add")
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/add",consumes = "application/json", produces = "application/json")
     public String AddProduct(@RequestBody Product p)
     {
         System.out.println(p.getName().toString());
@@ -29,11 +30,13 @@ public class ShoppingController {
         return "Welcome to the add page";
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/view")
-    public String ViewProduct()
+    public List<Product> ViewProduct()
     {
-        return "Welcome to the view page";
+        return (List<Product>) dao.findAll();
     }
+    @CrossOrigin(origins = "*")
     @PostMapping("/search")
     public String SearchProduct()
     {
