@@ -8,6 +8,7 @@ import com.nest.shoppingcartapp_backend.model.UserRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.lang.model.util.Elements;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +41,14 @@ public class ShoppingController {
     }
 
     @CrossOrigin(origins = "*")
+    @PostMapping(path = "/getUserById",consumes = "application/json",produces = "application/json")
+    public List<UserRegister> GetUserById(@RequestBody UserRegister u)
+    {
+        return (List<UserRegister>) d.FindUser(u.getId());
+    }
+
+
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "/add",consumes = "application/json", produces = "application/json")
     public String AddProduct(@RequestBody Product p)
     {
@@ -58,6 +67,7 @@ public class ShoppingController {
     {
         return (List<Product>) dao.findAll();
     }
+
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/search",consumes = "application/json",produces = "application/json")
     public List<Product> SearchProduct(@RequestBody Product p)
